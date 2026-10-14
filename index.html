@@ -1,0 +1,736 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Rudra Pratap Yadav | Python & Full Stack Web Developer</title>
+<meta name="description" content="Portfolio of Rudra Pratap Yadav, BCA student and Python & Full Stack Web Developer. HTML, CSS, JS, Node.js, Firebase, SQL.">
+<meta name="theme-color" content="#0a0b0f">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;800&family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#0a0b0f; --panel:#12141b; --panel2:#181b24; --line:#262a36;
+  --amber:#f5a623; --amber2:#ffcf6b; --text:#ece9e2; --muted:#8f95a3;
+  --display:'Sora',system-ui,sans-serif; --body:'DM Sans',system-ui,sans-serif;
+  --r:18px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;scroll-padding-top:80px}
+body{background:var(--ink);color:var(--text);font-family:var(--body);line-height:1.65;overflow-x:hidden;font-size:17px}
+img{max-width:100%;display:block}
+a{color:inherit;text-decoration:none}
+li{list-style:none}
+::selection{background:var(--amber);color:#000}
+:focus-visible{outline:2px solid var(--amber);outline-offset:3px}
+
+#bg{position:fixed;inset:0;z-index:0;width:100%;height:100%}
+main,footer,.nav{position:relative;z-index:2}
+.cursor-glow{position:fixed;width:420px;height:420px;border-radius:50%;pointer-events:none;z-index:1;
+  background:radial-gradient(circle,rgba(245,166,35,.16),transparent 65%);transform:translate(-50%,-50%);left:-999px;top:-999px}
+.progress{position:fixed;top:0;left:0;height:3px;width:0;background:linear-gradient(90deg,var(--amber),var(--amber2));z-index:100}
+
+/* loader */
+#loader{position:fixed;inset:0;background:var(--ink);z-index:200;display:grid;place-content:center;gap:22px;justify-items:center;transition:transform .9s cubic-bezier(.77,0,.18,1)}
+#loader.done{transform:translateY(-100%)}
+.loader-name{font-family:var(--display);font-weight:800;font-size:clamp(3rem,10vw,6rem);color:var(--amber);letter-spacing:.08em}
+.loader-bar{width:200px;height:3px;background:var(--line);overflow:hidden;border-radius:3px}
+.loader-bar span{display:block;height:100%;width:0;background:var(--amber);animation:load 1.4s ease forwards}
+@keyframes load{to{width:100%}}
+
+/* nav */
+.nav{position:fixed;top:0;left:0;right:0;display:flex;justify-content:space-between;align-items:center;padding:16px 5vw;
+  backdrop-filter:blur(14px);background:rgba(10,11,15,.6);border-bottom:1px solid rgba(255,255,255,.05);z-index:50}
+.logo{font-family:var(--display);font-weight:800;font-size:1.3rem}
+.logo span{color:var(--amber)}
+.nav nav{display:flex;gap:28px;align-items:center;font-size:.95rem}
+.nav nav a{color:var(--muted);transition:color .2s}
+.nav nav a:hover{color:var(--amber)}
+.nav-cta{background:var(--amber);color:#000!important;padding:8px 18px;border-radius:99px;font-weight:700}
+.burger{display:none;background:none;border:0;width:36px;height:36px;cursor:pointer;position:relative}
+.burger i{position:absolute;left:6px;right:6px;height:2px;background:var(--text);transition:.3s}
+.burger i:first-child{top:13px}.burger i:last-child{top:21px}
+
+/* hero */
+.hero{min-height:100vh;display:grid;grid-template-columns:1.2fr .9fr;gap:4vw;align-items:center;padding:120px 5vw 80px;position:relative}
+.hello{color:var(--amber);font-weight:700;margin-bottom:6px}
+h1{font-family:var(--display);font-weight:800;line-height:1.02;font-size:clamp(2.8rem,7.2vw,6rem);letter-spacing:-.02em}
+h1 .line{display:block;perspective:700px}
+
+h1 .line.outline{color:transparent;-webkit-text-stroke:2px var(--amber)}
+@keyframes rise{from{transform:translateY(105%);opacity:0}to{transform:none;opacity:1}}
+.role{font-family:var(--display);font-size:clamp(1.1rem,2.4vw,1.6rem);margin:22px 0 14px;min-height:2.2em}
+#typed{color:var(--amber)}
+.caret{color:var(--amber);animation:blink 1s steps(1) infinite}
+@keyframes blink{50%{opacity:0}}
+.lead{color:var(--muted);max-width:52ch}
+.cta-row{display:flex;gap:14px;flex-wrap:wrap;margin:30px 0 26px}
+.btn{display:inline-block;padding:14px 28px;border-radius:99px;font-weight:700;font-family:var(--body);font-size:1rem;cursor:pointer;border:2px solid var(--amber);transition:background .25s,color .25s,box-shadow .25s}
+.btn.primary{background:var(--amber);color:#000}
+.btn.primary:hover{box-shadow:0 0 34px rgba(245,166,35,.55)}
+.btn.ghost{background:transparent;color:var(--amber)}
+.btn.ghost:hover{background:var(--amber);color:#000}
+.socials{display:flex;gap:12px}
+.socials a{width:46px;height:46px;border:1px solid var(--line);border-radius:50%;display:grid;place-items:center;transition:.25s}
+.socials svg{width:20px;height:20px;fill:var(--text);transition:.25s}
+.socials a:hover{border-color:var(--amber);background:var(--amber);transform:translateY(-4px)}
+.socials a:hover svg{fill:#000}
+
+.hero-photo{position:relative;justify-self:center;width:min(440px,80vw);aspect-ratio:1;transform-style:preserve-3d;transition:transform .15s ease-out}
+.frame{position:absolute;inset:8%;border-radius:50% 50% 50% 8%;overflow:hidden;border:4px solid var(--amber);box-shadow:0 0 70px rgba(245,166,35,.28);background:#000}
+.frame img{width:100%;height:100%;object-fit:cover;object-position:50% 20%;transform:scale(1.08)}
+.ring{position:absolute;inset:0;border-radius:50%;border:2px dashed rgba(245,166,35,.45);animation:spin 28s linear infinite}
+.ring.r2{inset:-6%;border:1px solid rgba(255,255,255,.12);animation-direction:reverse;animation-duration:40s}
+@keyframes spin{to{transform:rotate(360deg)}}
+.chip{position:absolute;background:var(--panel);border:1px solid var(--amber);color:var(--amber);padding:7px 16px;border-radius:99px;font-weight:700;font-size:.85rem;animation:float 5s ease-in-out infinite;box-shadow:0 8px 24px rgba(0,0,0,.5)}
+.c1{top:6%;left:-4%}.c2{top:20%;right:-8%;animation-delay:-1s}.c3{bottom:14%;left:-8%;animation-delay:-2s}.c4{bottom:4%;right:2%;animation-delay:-3s}
+@keyframes float{50%{transform:translateY(-14px)}}
+.scroll-hint{position:absolute;bottom:26px;left:50%;width:26px;height:42px;border:2px solid var(--muted);border-radius:14px;transform:translateX(-50%)}
+.scroll-hint span{position:absolute;top:7px;left:50%;width:4px;height:8px;margin-left:-2px;background:var(--amber);border-radius:2px;animation:wheel 1.6s infinite}
+@keyframes wheel{to{transform:translateY(14px);opacity:0}}
+
+/* marquee */
+.marquee{background:var(--amber);color:#000;overflow:hidden;transform:rotate(-1.2deg) skewX(var(--sk,0deg));margin:10px -2vw;padding:14px 0}
+.track{display:flex;gap:46px;width:max-content;animation:slide 26s linear infinite;font-family:var(--display);font-weight:800;font-size:1.4rem;white-space:nowrap}
+.track span::after{content:"\2726";margin-left:46px}
+@keyframes slide{to{transform:translateX(-50%)}}
+
+/* sections */
+.section{padding:110px 5vw;max-width:1200px;margin:0 auto}
+.title{font-family:var(--display);font-weight:800;font-size:clamp(2rem,5vw,3.4rem);margin-bottom:46px;letter-spacing:-.01em;display:inline-block;border-bottom:5px solid var(--amber);padding-bottom:6px}
+.big{font-family:var(--display);font-size:clamp(1.2rem,2.4vw,1.7rem);line-height:1.5;margin-bottom:18px;max-width:34em}
+.muted{color:var(--muted);max-width:62ch}
+.reveal{opacity:0;transform:translateY(40px);transition:opacity .8s,transform .8s cubic-bezier(.2,.8,.2,1)}
+.reveal.in{opacity:1;transform:none}
+
+.about-grid{display:grid;grid-template-columns:1.3fr 1fr;gap:50px;align-items:center}
+.stats{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.stat,.card,.proj,.ach,.panel{background:var(--panel);border:1px solid var(--line);border-radius:var(--r)}
+.stat{padding:26px;transition:border-color .3s,transform .15s}
+.stat:hover,.card:hover,.proj:hover,.ach:hover{border-color:var(--amber)}
+.stat b{display:block;font-family:var(--display);font-size:3rem;color:var(--amber);line-height:1}
+.stat b::after{content:"+"}
+.stat small{color:var(--muted)}
+
+.skills-grid{display:grid;grid-template-columns:1.2fr 1fr;gap:24px}
+.panel{padding:32px}
+.panel h3{font-family:var(--display);margin-bottom:22px}
+.skill{margin-bottom:20px}
+.skill span{display:block;margin-bottom:8px;font-weight:500}
+.skill i{display:block;height:9px;background:var(--line);border-radius:9px;overflow:hidden}
+.skill u{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--amber),var(--amber2));border-radius:9px;transition:width 1.6s cubic-bezier(.2,.8,.2,1);box-shadow:0 0 14px rgba(245,166,35,.6)}
+.tags{display:flex;flex-wrap:wrap;gap:10px}
+.tags li{border:1px solid var(--line);background:var(--panel2);padding:9px 16px;border-radius:99px;font-size:.95rem;transition:.25s}
+.tags li:hover{border-color:var(--amber);color:var(--amber);transform:translateY(-3px)}
+.tags.sm li{font-size:.8rem;padding:4px 12px}
+
+.timeline{position:relative;padding-left:36px}
+.timeline::before{content:"";position:absolute;left:8px;top:6px;bottom:6px;width:2px;background:linear-gradient(var(--amber),transparent)}
+.t-item{position:relative;margin-bottom:26px}
+.dot{position:absolute;left:-36px;top:28px;width:18px;height:18px;border-radius:50%;background:var(--ink);border:4px solid var(--amber);box-shadow:0 0 0 6px rgba(245,166,35,.15)}
+.card{padding:26px 30px;transition:border-color .3s,transform .15s}
+.when{display:inline-block;background:var(--amber);color:#000;font-weight:700;font-size:.8rem;padding:3px 12px;border-radius:99px;margin-bottom:10px}
+.card h3{font-family:var(--display);font-size:1.25rem}
+.org{color:var(--amber);font-weight:700;margin-bottom:6px}
+.card p:last-child{color:var(--muted)}
+
+.proj-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:22px}
+.proj{padding:26px;transition:border-color .3s,transform .15s;display:flex;flex-direction:column;gap:12px}
+.proj-art{background:var(--ink);border-radius:12px;padding:18px;border:1px solid var(--line)}
+.proj-art svg{width:100%;height:110px;fill:none;stroke:var(--amber);stroke-width:2}
+.proj-art .fill{fill:var(--amber)}
+.proj-art .stroke{stroke-width:4;stroke-linecap:round;stroke-linejoin:round}
+.proj h3{font-family:var(--display)}
+.proj p{color:var(--muted);flex:1}
+.link{color:var(--amber);font-weight:700}
+.link:hover{text-decoration:underline}
+
+.ach-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:20px;margin-bottom:34px}
+.ach{padding:26px;transition:border-color .3s,transform .15s;border-left:4px solid var(--amber)}
+.ach time{color:var(--amber);font-weight:700;font-size:.85rem}
+.ach h3{font-family:var(--display);margin:6px 0;font-size:1.1rem}
+.ach p{color:var(--muted);font-size:.95rem}
+
+.contact-grid{display:grid;grid-template-columns:1fr 1.1fr;gap:40px;margin-top:30px}
+.contact-info{display:grid;gap:14px;align-content:start}
+.contact-info a{font-family:var(--display);font-size:1.1rem;padding:16px 20px;border:1px solid var(--line);border-radius:14px;background:var(--panel);transition:.25s;overflow-wrap:anywhere}
+.contact-info a:hover{border-color:var(--amber);color:var(--amber);transform:translateX(8px)}
+form label{display:block;margin-bottom:16px;font-weight:500;font-size:.9rem}
+form input,form textarea{display:block;width:100%;margin-top:6px;background:var(--ink);border:1px solid var(--line);border-radius:12px;padding:13px 16px;color:var(--text);font:inherit;transition:.25s}
+form input:focus,form textarea:focus{outline:0;border-color:var(--amber);box-shadow:0 0 0 3px rgba(245,166,35,.2)}
+footer{text-align:center;padding:34px 5vw;color:var(--muted);border-top:1px solid var(--line);font-size:.9rem}
+
+/* responsive */
+@media(max-width:900px){
+  .hero{grid-template-columns:1fr;text-align:left;padding-top:110px}
+  .hero-photo{order:-1;width:min(320px,76vw)}
+  .about-grid,.skills-grid,.contact-grid{grid-template-columns:1fr}
+  .scroll-hint{display:none}
+  .burger{display:block}
+  .nav nav{position:fixed;inset:64px 0 auto 0;flex-direction:column;background:var(--ink);padding:28px;gap:20px;border-bottom:1px solid var(--line);transform:translateY(-130%);transition:transform .4s}
+  .nav nav.open{transform:none}
+  .burger[aria-expanded=true] i:first-child{transform:translateY(4px) rotate(45deg)}
+  .burger[aria-expanded=true] i:last-child{transform:translateY(-4px) rotate(-45deg)}
+}
+@media(prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}
+  html{scroll-behavior:auto}
+  .reveal{opacity:1;transform:none}
+}
+
+
+/* ===== ULTRA ANIMATION LAYER ===== */
+@property --a{syntax:'<angle>';inherits:false;initial-value:0deg}
+.aurora{position:fixed;inset:0;z-index:0;overflow:hidden;pointer-events:none}
+.aurora i{position:absolute;width:55vmax;height:55vmax;border-radius:50%;filter:blur(110px);opacity:.2;animation:drift 18s ease-in-out infinite alternate}
+.aurora i:nth-child(1){background:#f5a623;top:-20%;left:-15%}
+.aurora i:nth-child(2){background:#b86a00;bottom:-25%;right:-10%;animation-duration:24s}
+.aurora i:nth-child(3){background:#ffcf6b;top:35%;left:40%;opacity:.1;animation-duration:30s}
+@keyframes drift{to{transform:translate(12vw,10vh) scale(1.25) rotate(40deg)}}
+#fx{position:fixed;inset:0;width:100%;height:100%;pointer-events:none;z-index:150}
+.pct{font-family:var(--display);color:var(--muted);font-size:.9rem}
+.cur-dot,.cur-ring{display:none;position:fixed;left:0;top:0;pointer-events:none;z-index:300}
+body.nocur .cur-dot,body.nocur .cur-ring{display:block}
+body.nocur,body.nocur a,body.nocur button,body.nocur input,body.nocur textarea{cursor:none}
+.cur-dot{width:8px;height:8px;margin:-4px 0 0 -4px;background:var(--amber);border-radius:50%}
+.cur-ring{width:40px;height:40px;margin:-20px 0 0 -20px;border:1.5px solid var(--amber);border-radius:50%;transition:width .25s,height .25s,margin .25s,background .25s}
+.cur-ring.hov{width:70px;height:70px;margin:-35px 0 0 -35px;background:rgba(245,166,35,.15)}
+
+.ch{display:inline-block;opacity:0;transform:translateY(70%) rotateX(-95deg);transform-origin:50% 100%;
+  transition:transform .9s cubic-bezier(.2,.8,.2,1) calc(var(--i)*45ms),opacity .6s calc(var(--i)*45ms)}
+body.go .ch{opacity:1;transform:none}
+body.go .ch:hover{transform:translateY(-12px) rotate(-5deg);transition:transform .25s}
+
+.hero-photo::before{content:"";position:absolute;inset:6%;border-radius:50% 50% 50% 8%;
+  background:conic-gradient(from var(--a),transparent 0 60%,var(--amber) 85%,var(--amber2) 92%,transparent);
+  filter:blur(16px);animation:ang 3.5s linear infinite,morph 9s ease-in-out infinite}
+.frame{animation:morph 9s ease-in-out infinite}
+@keyframes ang{to{--a:360deg}}
+@keyframes morph{50%{border-radius:42% 58% 50% 50% / 55% 40% 60% 45%}}
+.chip{translate:calc(var(--dx,0)*var(--d,30)*1px) calc(var(--dy,0)*var(--d,30)*1px)}
+.c1{--d:-50}.c2{--d:60}.c3{--d:-80}.c4{--d:40}
+.ring.r2{translate:calc(var(--dx,0)*-30px) calc(var(--dy,0)*-30px)}
+
+.title.reveal{clip-path:inset(0 100% -10px 0)}
+.title.reveal.in{clip-path:inset(0 0 -10px 0);transition:opacity .8s,transform .8s,clip-path 1.1s cubic-bezier(.77,0,.18,1)}
+.timeline::before{transform-origin:top;transform:scaleY(var(--tl,1))}
+
+.stat,.card,.proj,.ach,.panel{position:relative;overflow:hidden}
+.stat::before,.card::before,.proj::before,.ach::before,.panel::before{content:"";position:absolute;inset:0;pointer-events:none;opacity:0;transition:opacity .3s;
+  background:radial-gradient(320px circle at var(--mx,50%) var(--my,50%),rgba(245,166,35,.2),transparent 60%)}
+.stat:hover::before,.card:hover::before,.proj:hover::before,.ach:hover::before,.panel:hover::before{opacity:1}
+
+.skill u{position:relative;overflow:hidden}
+.skill u::after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,transparent,rgba(255,255,255,.65),transparent);transform:translateX(-100%);animation:shine 2.4s infinite}
+@keyframes shine{to{transform:translateX(100%)}}
+.btn{position:relative;overflow:hidden}
+.btn::after{content:"";position:absolute;top:0;left:-80%;width:50%;height:100%;background:linear-gradient(100deg,transparent,rgba(255,255,255,.45),transparent);transform:skewX(-20deg);transition:left .6s}
+.btn:hover::after{left:130%}
+
+/* ===== KING LEVEL: PHOTO + SCROLL ===== */
+.frame{clip-path:circle(0% at 50% 50%);transition:clip-path 1.5s cubic-bezier(.77,0,.18,1) .3s}
+body.go .frame{clip-path:circle(150% at 50% 50%)}
+.frame img{transform:scale(1.14) translate(calc(var(--dx,0)*-18px),calc(var(--dy,0)*-18px));transition:transform .25s ease-out,filter .4s}
+.hero-photo:hover .frame img{filter:saturate(1.2) contrast(1.06)}
+.frame::after{content:"";position:absolute;left:0;right:0;top:0;height:3px;background:linear-gradient(90deg,transparent,var(--amber2),transparent);box-shadow:0 0 18px var(--amber);opacity:.85;animation:scan 4.5s ease-in-out infinite}
+@keyframes scan{50%{top:100%}}
+.ring.r1::after{content:"";position:absolute;top:-6px;left:50%;width:12px;height:12px;margin-left:-6px;border-radius:50%;background:var(--amber);box-shadow:0 0 22px 4px var(--amber)}
+.frame{cursor:pointer}
+.frame.pop{animation:morph 9s ease-in-out infinite,pop .8s cubic-bezier(.3,1.6,.5,1)}
+@keyframes pop{40%{transform:scale(1.1) rotate(8deg)}}
+
+.about-grid{grid-template-columns:.85fr 1.4fr;align-items:start}
+.about-photo{grid-column:1;grid-row:1/3;position:relative;margin:0;aspect-ratio:4/5;border-radius:var(--r);overflow:hidden;border:1px solid var(--amber);box-shadow:14px 14px 0 rgba(245,166,35,.18)}
+.about-grid>:not(.about-photo){grid-column:2}
+.about-photo img{position:absolute;left:0;top:-10%;width:100%;height:120%;object-fit:cover;object-position:50% 20%;transform:translateY(var(--py,0))}
+.about-photo::after{content:"";position:absolute;inset:0;background:var(--amber);transform-origin:right;transition:transform 1.3s cubic-bezier(.77,0,.18,1) .2s;z-index:3}
+.about-photo.in::after{transform:scaleX(0)}
+.about-photo figcaption{position:absolute;left:0;right:0;bottom:0;padding:44px 20px 18px;background:linear-gradient(transparent,rgba(10,11,15,.92));display:grid;z-index:2}
+.about-photo figcaption b{font-family:var(--display)}
+.about-photo figcaption span{color:var(--amber);font-size:.85rem}
+
+.avatar{position:fixed;right:22px;bottom:22px;width:68px;height:68px;border:0;border-radius:50%;background:none;padding:0;z-index:60;cursor:pointer;
+  opacity:0;transform:scale(.3) translateY(50px);pointer-events:none;transition:opacity .5s,transform .6s cubic-bezier(.3,1.6,.5,1)}
+.avatar.show{opacity:1;transform:none;pointer-events:auto}
+.avatar:hover{transform:scale(1.15)}
+.avatar svg{position:absolute;inset:0;width:100%;height:100%;transform:rotate(-90deg)}
+.avatar circle{fill:none;stroke-width:3}
+.avatar .trk{stroke:var(--line)}
+.avatar .bar{stroke:var(--amber);stroke-linecap:round;filter:drop-shadow(0 0 5px var(--amber))}
+.avatar img{position:absolute;inset:7px;width:calc(100% - 14px);height:calc(100% - 14px);border-radius:50%;object-fit:cover;object-position:50% 15%}
+
+@supports (animation-timeline:view()){
+  .section{animation:secIn linear both;animation-timeline:view();animation-range:entry 0% entry 40%}
+  @keyframes secIn{from{opacity:0;transform:perspective(1200px) rotateX(9deg) translateY(70px) scale(.95)}to{opacity:1;transform:none}}
+}
+@media(prefers-reduced-motion:reduce){.section{animation:none}.frame{clip-path:none}}
+@media(max-width:900px){
+  .about-grid{grid-template-columns:1fr}
+  .about-grid>*{grid-column:1!important;grid-row:auto!important}
+  .about-photo{max-width:340px;margin:0 14px 14px 0}
+  .avatar{width:56px;height:56px;right:14px;bottom:14px}
+}
+</style>
+</head>
+<body>
+
+<div id="loader" aria-hidden="true">
+  <div class="loader-name" id="loaderName">RPY</div>
+  <div class="loader-bar"><span></span></div>
+  <div class="pct" id="pct">0%</div>
+</div>
+
+<div class="aurora" aria-hidden="true"><i></i><i></i><i></i></div>
+<canvas id="bg" aria-hidden="true"></canvas>
+<canvas id="fx" aria-hidden="true"></canvas>
+<div class="cur-dot" aria-hidden="true"></div><div class="cur-ring" aria-hidden="true"></div>
+<div class="cursor-glow" aria-hidden="true"></div>
+<div class="progress" aria-hidden="true"></div>
+
+<header class="nav">
+  <a href="#home" class="logo">Rudra<span>.</span></a>
+  <button class="burger" aria-label="Toggle menu" aria-expanded="false"><i></i><i></i></button>
+  <nav>
+    <a href="#about">About</a>
+    <a href="#skills">Skills</a>
+    <a href="#experience">Experience</a>
+    <a href="#projects">Projects</a>
+    <a href="#achievements">Achievements</a>
+    <a href="#contact" class="nav-cta">Hire me</a>
+  </nav>
+</header>
+
+<main>
+<!-- HERO -->
+<section id="home" class="hero">
+  <div class="hero-text">
+    <p class="hello">Hi, I'm</p>
+    <h1><span class="line">Rudra</span><span class="line outline">Pratap Yadav</span></h1>
+    <p class="role">I build <span id="typed"></span><span class="caret">|</span></p>
+    <p class="lead">BCA student at United University with hands-on internship experience in Python and web development. I turn ideas into fast, clean, working products.</p>
+    <div class="cta-row">
+      <a href="#projects" class="btn primary magnetic">See my work</a>
+      <a href="Rudra_Pratap_Yadav_Resume.pdf" download class="btn ghost magnetic">Download resume</a>
+    </div>
+    <div class="socials">
+      <a href="https://github.com/Rudra8960" target="_blank" rel="noopener" aria-label="GitHub">
+        <svg viewBox="0 0 24 24"><path d="M12 .5C5.65.5.5 5.65.5 12c0 5.08 3.29 9.39 7.86 10.91.58.1.79-.25.79-.56v-2c-3.2.7-3.87-1.37-3.87-1.37-.52-1.33-1.28-1.69-1.28-1.69-1.04-.71.08-.7.08-.7 1.15.08 1.76 1.18 1.76 1.18 1.03 1.76 2.69 1.25 3.35.96.1-.74.4-1.25.73-1.54-2.55-.29-5.24-1.28-5.24-5.69 0-1.26.45-2.28 1.18-3.09-.12-.29-.51-1.46.11-3.05 0 0 .97-.31 3.17 1.18a11 11 0 0 1 5.77 0c2.2-1.49 3.17-1.18 3.17-1.18.63 1.59.23 2.76.11 3.05.74.81 1.18 1.83 1.18 3.09 0 4.42-2.69 5.39-5.25 5.68.41.36.78 1.06.78 2.14v3.17c0 .31.21.67.8.56A11.5 11.5 0 0 0 23.5 12C23.5 5.65 18.35.5 12 .5z"/></svg></a>
+      <a href="https://linkedin.com/in/rudra-pratap-yadav-678060256" target="_blank" rel="noopener" aria-label="LinkedIn">
+        <svg viewBox="0 0 24 24"><path d="M4.98 3.5a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5zM3 9.8h4V21H3zM9.5 9.8h3.8v1.6h.1c.5-1 1.8-2 3.7-2 4 0 4.7 2.6 4.7 6V21h-4v-4.8c0-1.2 0-2.7-1.7-2.7s-1.9 1.3-1.9 2.6V21h-4z"/></svg></a>
+      <a href="mailto:rudrapratapyadav461@gmail.com" aria-label="Email">
+        <svg viewBox="0 0 24 24"><path d="M3 5h18a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1zm9 7.200L4.500 7H4v.6l8 5.400 8-5.400V7h-.5z"/></svg></a>
+    </div>
+  </div>
+
+  <div class="hero-photo tilt">
+    <div class="ring r1"></div><div class="ring r2"></div>
+    <div class="frame"><img src="photo.jpg" alt="Portrait of Rudra Pratap Yadav" fetchpriority="high"></div>
+    <div class="chip c1">Python</div>
+    <div class="chip c2">Node.js</div>
+    <div class="chip c3">Firebase</div>
+    <div class="chip c4">SQL</div>
+  </div>
+
+  <a href="#about" class="scroll-hint" aria-label="Scroll down"><span></span></a>
+</section>
+
+<!-- MARQUEE -->
+<div class="marquee" aria-hidden="true">
+  <div class="track">
+    <span>Python</span><span>HTML</span><span>CSS</span><span>JavaScript</span><span>Node.js</span><span>Firebase</span><span>SQL</span><span>DBMS</span>
+    <span>Python</span><span>HTML</span><span>CSS</span><span>JavaScript</span><span>Node.js</span><span>Firebase</span><span>SQL</span><span>DBMS</span>
+  </div>
+</div>
+
+<!-- ABOUT -->
+<section id="about" class="section">
+  <h2 class="title reveal">About me</h2>
+  <div class="about-grid">
+    <figure class="about-photo reveal tilt"><img src="photo.jpg" alt="Rudra Pratap Yadav in a navy suit" loading="lazy"><figcaption><b>Rudra Pratap Yadav</b><span>BCA student, Python and full stack developer</span></figcaption></figure>
+    <div class="reveal">
+      <p class="big">I want to work where I can use my full potential, keep upgrading my skills, and help the team take the product to the next level.</p>
+      <p class="muted">I'm pursuing a Bachelor of Computer Applications at United University, Prayagraj. Alongside college I completed two internships at ALFIDO TECH, Hyderabad, where I worked on Python development and front-end web projects, and I regularly take part in hackathons and technical workshops.</p>
+    </div>
+    <div class="stats reveal">
+      <div class="stat tilt"><b data-count="3">0</b><small>Months of internship</small></div>
+      <div class="stat tilt"><b data-count="3">0</b><small>Events & hackathons</small></div>
+      <div class="stat tilt"><b data-count="2">0</b><small>Industry roles</small></div>
+      <div class="stat tilt"><b data-count="7">0</b><small>Core technologies</small></div>
+    </div>
+  </div>
+</section>
+
+<!-- SKILLS -->
+<section id="skills" class="section">
+  <h2 class="title reveal">Skills</h2>
+  <div class="skills-grid">
+    <div class="panel reveal">
+      <h3>Technical</h3>
+      <div class="skill" data-level="85"><span>Python Programming</span><i><u></u></i></div>
+      <div class="skill" data-level="80"><span>HTML, CSS, JS, Node.js</span><i><u></u></i></div>
+      <div class="skill" data-level="75"><span>Firebase & SQL</span><i><u></u></i></div>
+      <div class="skill" data-level="78"><span>DBMS</span><i><u></u></i></div>
+      <div class="skill" data-level="88"><span>Computer Software</span><i><u></u></i></div>
+    </div>
+    <div class="panel reveal">
+      <h3>Soft skills</h3>
+      <ul class="tags">
+        <li>Teamwork & Collaboration</li>
+        <li>Works Independently</li>
+        <li>Punctuality & Time Management</li>
+        <li>Problem-Solving</li>
+        <li>Quick Learning & Adaptability</li>
+        <li>Communication</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- EXPERIENCE -->
+<section id="experience" class="section">
+  <h2 class="title reveal">Experience & education</h2>
+  <div class="timeline">
+    <article class="t-item reveal">
+      <div class="dot"></div>
+      <div class="card tilt">
+        <span class="when">2 months</span>
+        <h3>Web Developer Intern</h3>
+        <p class="org">ALFIDO TECH, Hyderabad</p>
+        <p>Worked on front-end web development tasks and practical projects using web technologies.</p>
+      </div>
+    </article>
+    <article class="t-item reveal">
+      <div class="dot"></div>
+      <div class="card tilt">
+        <span class="when">1 month</span>
+        <h3>Python Developer Intern</h3>
+        <p class="org">ALFIDO TECH, Hyderabad</p>
+        <p>Worked on core Python concepts and practical development tasks. Learned industry software engineering practices and sharpened problem-solving skills.</p>
+      </div>
+    </article>
+    <article class="t-item reveal">
+      <div class="dot"></div>
+      <div class="card tilt">
+        <span class="when">Pursuing</span>
+        <h3>Bachelor of Computer Applications</h3>
+        <p class="org">United University</p>
+        <p>Building a foundation in programming, databases and software development.</p>
+      </div>
+    </article>
+    <article class="t-item reveal">
+      <div class="dot"></div>
+      <div class="card tilt">
+        <span class="when">2024 and 2022</span>
+        <h3>Class 12th and Class 10th (CBSE)</h3>
+        <p class="org">Saraswati Vidya Mandir, Sultanpur</p>
+      </div>
+    </article>
+  </div>
+</section>
+
+<!-- PROJECTS -->
+<section id="projects" class="section">
+  <h2 class="title reveal">Projects</h2>
+  <div class="proj-grid">
+    <article class="proj tilt reveal">
+      <div class="proj-art"><svg viewBox="0 0 200 120"><rect x="10" y="14" width="120" height="26" rx="13"/><rect x="70" y="52" width="120" height="26" rx="13" class="fill"/><rect x="10" y="90" width="90" height="22" rx="11"/></svg></div>
+      <h3>Chat Verse</h3>
+      <p>Team project built for HackDiwas 3.0 at United University, Prayagraj (23-24 April 2026).</p>
+      <div class="tags sm"><li>Team build</li><li>Hackathon</li></div>
+      <a href="https://github.com/Rudra8960" target="_blank" rel="noopener" class="link">View on GitHub</a>
+    </article>
+    <article class="proj tilt reveal">
+      <div class="proj-art"><svg viewBox="0 0 200 120"><rect x="10" y="10" width="180" height="100" rx="10"/><rect x="22" y="26" width="70" height="8" class="fill"/><rect x="22" y="44" width="120" height="6"/><rect x="22" y="58" width="100" height="6"/></svg></div>
+      <h3>Web Development Work</h3>
+      <p>Front-end projects built with HTML, CSS and JavaScript during my ALFIDO TECH internship.</p>
+      <div class="tags sm"><li>HTML</li><li>CSS</li><li>JS</li></div>
+      <a href="https://github.com/Rudra8960" target="_blank" rel="noopener" class="link">View on GitHub</a>
+    </article>
+    <article class="proj tilt reveal">
+      <div class="proj-art"><svg viewBox="0 0 200 120"><path d="M20 90 L60 50 L100 70 L150 25 L180 40" class="stroke"/><circle cx="60" cy="50" r="5" class="fill"/><circle cx="100" cy="70" r="5" class="fill"/><circle cx="150" cy="25" r="5" class="fill"/></svg></div>
+      <h3>Python Practice Projects</h3>
+      <p>Programs and problem-solving exercises from my Python developer internship.</p>
+      <div class="tags sm"><li>Python</li><li>Problem-solving</li></div>
+      <a href="https://github.com/Rudra8960/My-Certificate.git" target="_blank" rel="noopener" class="link">Certificates repo</a>
+    </article>
+  </div>
+</section>
+
+<!-- ACHIEVEMENTS -->
+<section id="achievements" class="section">
+  <h2 class="title reveal">Achievements & certifications</h2>
+  <div class="ach-grid">
+    <div class="ach reveal tilt"><time>23-24 Apr 2026</time><h3>HackDiwas 3.0</h3><p>Represented team "Chat Verse" at United University, Prayagraj.</p></div>
+    <div class="ach reveal tilt"><time>15 Apr 2025</time><h3>Virtual Labs workshop, IIT Delhi</h3><p>Took part in an interactive technical workshop.</p></div>
+    <div class="ach reveal tilt"><time>11 Nov 2024</time><h3>Hack N Build</h3><p>Participated in the event organised by Propogative Pointers at United University.</p></div>
+    <div class="ach reveal tilt"><time>ALFIDO TECH</time><h3>Industry experience</h3><p>Practical experience in Python and web development through two internships.</p></div>
+  </div>
+  <a class="btn ghost magnetic reveal" href="https://github.com/Rudra8960/My-Certificate.git" target="_blank" rel="noopener">View all certificates</a>
+</section>
+
+<!-- CONTACT -->
+<section id="contact" class="section contact">
+  <h2 class="title reveal">Let's work together</h2>
+  <p class="big reveal">Open to internships and entry-level roles in Python and full stack web development.</p>
+  <div class="contact-grid">
+    <div class="reveal contact-info">
+      <a href="mailto:rudrapratapyadav461@gmail.com">rudrapratapyadav461@gmail.com</a>
+      <a href="tel:+918960168198">+91 8960168198</a>
+      <a href="https://github.com/Rudra8960" target="_blank" rel="noopener">github.com/Rudra8960</a>
+      <a href="https://linkedin.com/in/rudra-pratap-yadav-678060256" target="_blank" rel="noopener">LinkedIn profile</a>
+    </div>
+    <form class="panel reveal" id="contactForm">
+      <label>Your name<input type="text" name="name" required autocomplete="name"></label>
+      <label>Your email<input type="email" name="email" required autocomplete="email"></label>
+      <label>Message<textarea name="message" rows="4" required></textarea></label>
+      <button class="btn primary magnetic" type="submit">Send message</button>
+    </form>
+  </div>
+</section>
+</main>
+
+<button class="avatar" aria-label="Back to top"><svg viewBox="0 0 64 64" aria-hidden="true"><circle class="trk" cx="32" cy="32" r="29"/><circle class="bar" cx="32" cy="32" r="29"/></svg><img src="photo.jpg" alt=""></button>
+
+<footer>
+  <p>&copy; <span id="year"></span> Rudra Pratap Yadav. Built with HTML, CSS and JavaScript.</p>
+</footer>
+
+<script>
+(() => {
+  const $ = (s, c = document) => c.querySelector(s);
+  const $$ = (s, c = document) => [...c.querySelectorAll(s)];
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const fine = matchMedia('(pointer: fine)').matches;
+
+  $('#year').textContent = new Date().getFullYear();
+
+  /* Loader */
+  window.addEventListener('load', () => setTimeout(() => { $('#loader').classList.add('done'); setTimeout(() => document.body.classList.add('go'), reduce ? 0 : 500); }, reduce ? 0 : 1500));
+
+  /* Typed roles */
+  const roles = ['Python applications', 'full stack websites', 'clean front-ends', 'Node.js back-ends', 'ideas that ship'];
+  const typed = $('#typed');
+  let ri = 0, ci = 0, del = false;
+  (function tick() {
+    const word = roles[ri];
+    typed.textContent = word.slice(0, ci);
+    if (!del && ci === word.length) { del = true; return setTimeout(tick, 1400); }
+    if (del && ci === 0) { del = false; ri = (ri + 1) % roles.length; }
+    ci += del ? -1 : 1;
+    setTimeout(tick, del ? 35 : 75);
+  })();
+
+  /* Scroll progress + nav */
+  const bar = $('.progress');
+  addEventListener('scroll', () => {
+    const h = document.documentElement;
+    bar.style.width = (h.scrollTop / (h.scrollHeight - h.clientHeight)) * 100 + '%';
+  }, { passive: true });
+
+  const burger = $('.burger'), nav = $('.nav nav');
+  burger.addEventListener('click', () => {
+    const open = nav.classList.toggle('open');
+    burger.setAttribute('aria-expanded', open);
+  });
+  $$('.nav nav a').forEach(a => a.addEventListener('click', () => {
+    nav.classList.remove('open'); burger.setAttribute('aria-expanded', false);
+  }));
+
+  /* Reveal, skill bars, counters */
+  const io = new IntersectionObserver(es => es.forEach(e => {
+    if (!e.isIntersecting) return;
+    e.target.classList.add('in');
+    $$('.skill', e.target).forEach(s => $('u', s).style.width = s.dataset.level + '%');
+    $$('[data-count]', e.target).forEach(countUp);
+    io.unobserve(e.target);
+  }), { threshold: .15 });
+  $$('.reveal').forEach((el, i) => { el.style.transitionDelay = (i % 4) * 80 + 'ms'; io.observe(el); });
+
+  function countUp(el) {
+    const end = +el.dataset.count; let n = 0;
+    const t = setInterval(() => { el.textContent = ++n; if (n >= end) clearInterval(t); }, 260);
+  }
+
+  if (fine && !reduce) {
+    /* Cursor glow */
+    const glow = $('.cursor-glow');
+    addEventListener('mousemove', e => { glow.style.left = e.clientX + 'px'; glow.style.top = e.clientY + 'px'; });
+
+    /* 3D tilt */
+    $$('.tilt').forEach(el => {
+      el.addEventListener('mousemove', e => {
+        const r = el.getBoundingClientRect();
+        const x = (e.clientX - r.left) / r.width - .5, y = (e.clientY - r.top) / r.height - .5;
+        el.style.transform = `perspective(900px) rotateY(${x * 12}deg) rotateX(${-y * 12}deg) translateZ(6px)`;
+      });
+      el.addEventListener('mouseleave', () => el.style.transform = '');
+    });
+
+    /* Magnetic buttons */
+    $$('.magnetic').forEach(b => {
+      b.addEventListener('mousemove', e => {
+        const r = b.getBoundingClientRect();
+        b.style.transform = `translate(${(e.clientX - r.left - r.width / 2) * .25}px,${(e.clientY - r.top - r.height / 2) * .35}px)`;
+      });
+      b.addEventListener('mouseleave', () => b.style.transform = '');
+    });
+  }
+
+  /* Particle network background */
+  const cv = $('#bg'), ctx = cv.getContext('2d');
+  let W, H, pts = [], mouse = { x: -999, y: -999 };
+  function size() {
+    W = cv.width = innerWidth; H = cv.height = innerHeight;
+    pts = Array.from({ length: Math.min(90, Math.floor(W * H / 16000)) }, () => ({
+      x: Math.random() * W, y: Math.random() * H,
+      vx: (Math.random() - .5) * .5, vy: (Math.random() - .5) * .5, r: Math.random() * 1.8 + .6
+    }));
+  }
+  size(); addEventListener('resize', size);
+  addEventListener('mousemove', e => { mouse.x = e.clientX; mouse.y = e.clientY; });
+  function draw() {
+    ctx.clearRect(0, 0, W, H);
+    pts.forEach((p, i) => {
+      p.x += p.vx; p.y += p.vy;
+      if (p.x < 0 || p.x > W) p.vx *= -1;
+      if (p.y < 0 || p.y > H) p.vy *= -1;
+      const dx = p.x - mouse.x, dy = p.y - mouse.y, d = Math.hypot(dx, dy);
+      if (d < 140) { p.x += dx / d * 1.6; p.y += dy / d * 1.6; }
+      ctx.beginPath(); ctx.arc(p.x, p.y, p.r, 0, 6.283);
+      ctx.fillStyle = 'rgba(245,166,35,.8)'; ctx.fill();
+      for (let j = i + 1; j < pts.length; j++) {
+        const q = pts[j], dd = Math.hypot(p.x - q.x, p.y - q.y);
+        if (dd < 130) {
+          ctx.strokeStyle = `rgba(245,166,35,${.2 * (1 - dd / 130)})`;
+          ctx.beginPath(); ctx.moveTo(p.x, p.y); ctx.lineTo(q.x, q.y); ctx.stroke();
+        }
+      }
+    });
+    if (!reduce) requestAnimationFrame(draw);
+  }
+  draw();
+
+  /* Contact form: opens the visitor's email app */
+  $('#contactForm').addEventListener('submit', e => {
+    e.preventDefault();
+    const f = new FormData(e.target);
+    const body = `${f.get('message')}\n\nFrom: ${f.get('name')} (${f.get('email')})`;
+    location.href = `mailto:rudrapratapyadav461@gmail.com?subject=${encodeURIComponent('Portfolio enquiry from ' + f.get('name'))}&body=${encodeURIComponent(body)}`;
+  });
+})();
+
+
+/* ===== ULTRA ANIMATION LAYER ===== */
+(() => {
+  const $ = (q, c = document) => c.querySelector(q), $$ = (q, c = document) => [...c.querySelectorAll(q)];
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches, fine = matchMedia('(pointer: fine)').matches;
+
+  /* loader percentage */
+  const pct = $('#pct'); let p = 0;
+  const pt = setInterval(() => { p = Math.min(100, p + 2); pct.textContent = p + '%'; if (p >= 100) clearInterval(pt); }, 28);
+
+  /* split hero name into letters */
+  let n = 0;
+  $('h1').setAttribute('aria-label', 'Rudra Pratap Yadav');
+  $$('h1 .line').forEach(l => {
+    const t = l.textContent; l.textContent = ''; l.setAttribute('aria-hidden', 'true');
+    [...t].forEach(c => {
+      if (c === ' ') return l.append(' ');
+      const s = document.createElement('span'); s.className = 'ch'; s.textContent = c; s.style.setProperty('--i', n++); l.append(s);
+    });
+  });
+
+  /* decode-scramble on section titles */
+  const sym = '01<>/{}#$%&*';
+  function scramble(el) {
+    const t = el.dataset.t || (el.dataset.t = el.textContent); let f = 0;
+    const id = setInterval(() => {
+      el.textContent = [...t].map((c, k) => c === ' ' ? ' ' : k < f / 22 * t.length ? c : sym[Math.random() * sym.length | 0]).join('');
+      if (++f > 22) { el.textContent = t; clearInterval(id); }
+    }, 40);
+  }
+  const so = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { if (!reduce) scramble(e.target); so.unobserve(e.target); } }), { threshold: .6 });
+  $$('.title').forEach(t => so.observe(t));
+
+  /* cursor spotlight inside cards */
+  $$('.card,.proj,.ach,.stat,.panel').forEach(el => el.addEventListener('pointermove', e => {
+    const r = el.getBoundingClientRect();
+    el.style.setProperty('--mx', e.clientX - r.left + 'px'); el.style.setProperty('--my', e.clientY - r.top + 'px');
+  }));
+
+  /* scroll parallax, marquee skew by scroll speed, timeline line draw */
+  const ht = $('.hero-text'), hp = $('.hero-photo'), mq = $('.marquee'), tl = $('.timeline');
+  if (!reduce) {
+    let last = scrollY, sk = 0;
+    (function loop() {
+      const y = scrollY, v = y - last; last = y;
+      sk += (Math.max(-12, Math.min(12, v)) * .5 - sk) * .1; mq.style.setProperty('--sk', sk + 'deg');
+      if (y < innerHeight * 1.2) {
+        ht.style.translate = '0 ' + y * .12 + 'px'; hp.style.translate = '0 ' + (-y * .1) + 'px';
+        ht.style.opacity = Math.max(0, 1 - y / (innerHeight * 1.1));
+      }
+      const r = tl.getBoundingClientRect();
+      tl.style.setProperty('--tl', Math.max(0, Math.min(1, (innerHeight * .7 - r.top) / r.height)));
+      requestAnimationFrame(loop);
+    })();
+    $('.hero').addEventListener('pointermove', e => {
+      hp.style.setProperty('--dx', e.clientX / innerWidth - .5); hp.style.setProperty('--dy', e.clientY / innerHeight - .5);
+    });
+  }
+
+  /* custom cursor */
+  if (fine && !reduce) {
+    const d = $('.cur-dot'), r = $('.cur-ring'); let x = 0, y = 0, rx = 0, ry = 0;
+    document.body.classList.add('nocur');
+    addEventListener('pointermove', e => { x = e.clientX; y = e.clientY; d.style.transform = `translate(${x}px,${y}px)`; });
+    (function f() { rx += (x - rx) * .15; ry += (y - ry) * .15; r.style.transform = `translate(${rx}px,${ry}px)`; requestAnimationFrame(f); })();
+    document.addEventListener('pointerover', e => r.classList.toggle('hov', !!e.target.closest('a,button,.tilt,input,textarea')));
+  }
+
+  /* sparkle trail + click burst */
+  const fx = $('#fx'), c = fx.getContext('2d'); let ps = [];
+  const rs = () => { fx.width = innerWidth; fx.height = innerHeight; }; rs(); addEventListener('resize', rs);
+  if (!reduce) {
+    addEventListener('pointerdown', e => {
+      for (let k = 0; k < 28; k++) { const a = Math.random() * 6.28, s = 2 + Math.random() * 5;
+        ps.push({ x: e.clientX, y: e.clientY, vx: Math.cos(a) * s, vy: Math.sin(a) * s, l: 1, r: 1.5 + Math.random() * 2.5 }); }
+    });
+    addEventListener('pointermove', e => {
+      if (fine && Math.random() < .35) ps.push({ x: e.clientX, y: e.clientY, vx: Math.random() - .5, vy: Math.random() - .5, l: .7, r: 1.6 });
+    });
+    (function f() {
+      c.clearRect(0, 0, fx.width, fx.height); ps = ps.filter(q => q.l > 0);
+      ps.forEach(q => { q.x += q.vx; q.y += q.vy; q.vx *= .96; q.vy = q.vy * .96 + .08; q.l -= .02;
+        c.globalAlpha = Math.max(0, q.l); c.fillStyle = '#f5a623'; c.beginPath(); c.arc(q.x, q.y, q.r, 0, 6.28); c.fill(); });
+      requestAnimationFrame(f);
+    })();
+  }
+})();
+
+/* ===== KING LEVEL: PHOTO + SCROLL ===== */
+(() => {
+  const $ = q => document.querySelector(q);
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const av = $('.avatar'), ring = $('.avatar .bar'), hp = $('.hero-photo'), frame = $('.hero-photo .frame'), ap = $('.about-photo img');
+  const L = 2 * Math.PI * 29; ring.style.strokeDasharray = L;
+  av.addEventListener('click', () => scrollTo({ top: 0, behavior: reduce ? 'auto' : 'smooth' }));
+  frame.addEventListener('click', () => { frame.classList.remove('pop'); void frame.offsetWidth; frame.classList.add('pop'); });
+  let last = scrollY, v = 0;
+  (function loop() {
+    const y = scrollY, h = document.documentElement, prog = y / (h.scrollHeight - h.clientHeight || 1);
+    v += ((y - last) - v) * .12; last = y;
+    ring.style.strokeDashoffset = L * (1 - prog);
+    av.classList.toggle('show', y > innerHeight * .7);
+    if (!reduce) {
+      av.style.rotate = Math.max(-25, Math.min(25, v * 2)) + 'deg';
+      if (y < innerHeight * 1.4) { hp.style.rotate = y * .03 + 'deg'; hp.style.scale = Math.max(.6, 1 - y / innerHeight * .25); }
+      const r = ap.parentElement.getBoundingClientRect();
+      ap.style.setProperty('--py', (r.top + r.height / 2 - innerHeight / 2) * -.08 + 'px');
+    }
+    requestAnimationFrame(loop);
+  })();
+})();
+</script>
+</body>
+</html>
